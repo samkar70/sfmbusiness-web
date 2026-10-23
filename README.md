@@ -18,7 +18,7 @@ cp .env.example .env.local   # fill TURSO_AUTH_TOKEN (use a read-only token)
 npm install
 npm run dev
 ```
-Env vars (server-only, never prefixed with `NEXT_PUBLIC_`): `TURSO_DB_URL`, `TURSO_AUTH_TOKEN`.
+Env vars (server-only; `VITE_TURSO_DB_URL` / `VITE_TURSO_AUTH_TOKEN` are also accepted as fallback): `TURSO_DB_URL`, `TURSO_AUTH_TOKEN`.
 Optional: `NEXT_PUBLIC_SITE_URL` (default https://www.usedcarventa.com).
 
 ## Deploy
