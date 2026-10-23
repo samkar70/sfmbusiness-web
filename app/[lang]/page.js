@@ -4,7 +4,7 @@ import { getCars, filterCars } from '@/lib/cars';
 import { getT } from '@/lib/i18n';
 import { SITE } from '@/lib/site';
 
-export const revalidate = 300;
+export const dynamic = 'force-dynamic'; // data is cached 5 min in lib/cars.js; failures are never cached
 
 export async function generateMetadata({ params }) {
   const { lang } = await params;

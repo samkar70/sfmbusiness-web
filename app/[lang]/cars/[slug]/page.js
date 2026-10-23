@@ -3,16 +3,11 @@ import Header from '@/components/Header';
 import Gallery from '@/components/Gallery';
 import ContactForm from '@/components/ContactForm';
 import { PriceBadge, milesText } from '@/components/CarCard';
-import { getCarById, getCars, idFromSlug, money, monthly } from '@/lib/cars';
+import { getCarById, idFromSlug, money, monthly } from '@/lib/cars';
 import { getT } from '@/lib/i18n';
-import { SITE, LANGS } from '@/lib/site';
+import { SITE } from '@/lib/site';
 
-export const revalidate = 300;
-
-export async function generateStaticParams() {
-  const cars = await getCars().catch(() => []);
-  return LANGS.flatMap((lang) => cars.map((c) => ({ lang, slug: c.slug })));
-}
+export const dynamic = 'force-dynamic';
 
 export async function generateMetadata({ params }) {
   const { lang, slug } = await params;
