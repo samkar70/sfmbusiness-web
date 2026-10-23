@@ -1,8 +1,9 @@
 import { notFound } from 'next/navigation';
 import Header from '@/components/Header';
-import Gallery from '@/components/Gallery';
+import CarDetailGallery from '@/components/CarDetailGallery';
 import ContactForm from '@/components/ContactForm';
-import { PriceBadge, milesText } from '@/components/CarCard';
+import { PriceBadge } from '@/components/CarCard';
+import { milesText } from '@/lib/utils';
 import { getCarById, idFromSlug, money, monthly } from '@/lib/cars';
 import { getT } from '@/lib/i18n';
 import { SITE } from '@/lib/site';
@@ -14,6 +15,7 @@ export async function generateMetadata({ params }) {
   const car = await getCarById(idFromSlug(slug));
   if (!car) return {};
   const t = getT(lang);
+  const badgeProps = {priceInfo: t.priceInfo, great: t.great, good: t.good, fair: t.fair, high: t.high};
   const price = money(car.price);
   const desc = lang === 'es'
     ? `${car.title} usado en venta en Alvarado, TX${price ? ` por ${price}` : ''}. ${milesText(car, t)}. Llame o escriba por WhatsApp al ${SITE.phoneDisplay}.`
@@ -36,6 +38,7 @@ export default async function CarPage({ params }) {
   const car = await getCarById(idFromSlug(slug));
   if (!car) notFound();
   const t = getT(lang);
+  const badgeProps = {priceInfo: t.priceInfo, great: t.great, good: t.good, fair: t.fair, high: t.high};
   const pm = monthly(car.price);
   const url = `${SITE.url}/${lang}/cars/${car.slug}`;
   const waText = encodeURIComponent(t.waText(car.title));
@@ -75,7 +78,7 @@ export default async function CarPage({ params }) {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify([ld, crumbs]) }} />
       <Header lang={lang} t={t} path={`/cars/${car.slug}`} />
       <main>
-        <Gallery id={car.id} count={car.photos} alt={car.title} noPhoto={t.noPhoto}
+        <CarDetailGallery id={car.id} count={car.photos} alt={car.title} noPhoto={t.noPhoto}
                  backHref={`/${lang}`} backLabel={t.back} shareLabel={t.share} shareTitle={car.title} />
         <div className="sheet">
           <div>
@@ -89,7 +92,7 @@ export default async function CarPage({ params }) {
               <div className="price">{money(car.price) || t.callForPrice}</div>
               {pm && <div className="pm">~${pm} {t.est}</div>}
             </div>
-            <PriceBadge rating={car.rating} t={t} />
+            <PriceBadge rating={car.rating} t={badgeProps} />
           </div>
           {pm && <p className="note">{t.estNote} {t.priceInfo}</p>}
 

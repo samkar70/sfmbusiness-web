@@ -19,6 +19,7 @@ export default async function Home({ params, searchParams }) {
   const { lang } = await params;
   const sp = await searchParams;
   const t = getT(lang);
+  const tCard = {available: t.available, soon: t.soon, favorite: t.favorite, hide: t.hide, checkAvailability: t.checkAvailability, priceInfo: t.priceInfo, great: t.great, good: t.good, fair: t.fair, high: t.high};
   const all = await getCars();
   const cars = filterCars(all, sp);
   const makes = [...new Set(all.map((c) => c.make))].sort();
@@ -98,7 +99,7 @@ export default async function Home({ params, searchParams }) {
 
         <p className="count" aria-live="polite">{t.results(cars.length)}</p>
         <div className="list">
-          {cars.map((c, i) => <CarCard key={c.id} car={c} lang={lang} t={t} index={i} />)}
+          {cars.map((c, i) => <CarCard key={c.id} car={c} lang={lang} t={tCard} index={i} />)}
         </div>
         {cars.length === 0 && <p className="empty">{t.noResults}</p>}
 

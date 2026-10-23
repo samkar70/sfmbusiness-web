@@ -1,5 +1,8 @@
+"use client";
 import Link from 'next/link';
 import { money, monthly } from '@/lib/cars';
+import CarCarousel from '@/components/CarCarousel';
+import { HeartIcon, XMarkIcon } from '@/components/Icons';
 
 export function PriceBadge({ rating, t }) {
   if (!rating) return null;
@@ -14,20 +17,25 @@ export default function CarCard({ car, lang, t, index = 0 }) {
     <article className="card" style={{ animationDelay: `${Math.min(index, 6) * 60}ms` }}>
       <Link href={`/${lang}/cars/${car.slug}`} aria-label={car.title}>
         <div className="ph">
-          {car.photos > 0 ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img src={`/api/img/${car.id}/0`} alt={`${car.title} – SFM Auto Sales Alvarado TX`}
-                 loading={index < 2 ? 'eager' : 'lazy'} decoding="async" />
-          ) : <div className="nophoto">{t.noPhoto}</div>}
+          <CarCarousel id={car.id} count={car.photos} alt={car.title} />
+          {/* Top-left status badge */}
           <span className={`tag ${car.state === 'available' ? 'ok' : 'soon'}`}>
             {car.state === 'available' ? t.available : t.soon}
           </span>
-          {car.photos > 1 && <span className="cnt">📷 {car.photos}</span>}
+          {/* Top-right action buttons */}
+          <div className="top-actions">
+            <button className="favorite-btn" aria-label={t.favorite}>
+              <HeartIcon />
+            </button>
+            <button className="hide-btn" aria-label={t.hide}>
+              <XMarkIcon />
+            </button>
+          </div>
         </div>
         <div className="cbody">
           <h2 className="ctitle">{car.title}</h2>
           <p className="csub">{milesText(car, t)}{car.transmission ? ` · ${car.transmission}` : ''}{car.color ? ` · ${car.color}` : ''}</p>
-          <p className="csub">📍 Alvarado, TX</p>
+          <p className="csub"><span className="icon-location" aria-hidden="true"></span> Alvarado, TX</p>
           <div className="cfoot">
             <div>
               <div className="price">{money(car.price) || t.callForPrice}</div>
@@ -35,6 +43,9 @@ export default function CarCard({ car, lang, t, index = 0 }) {
             </div>
             <PriceBadge rating={car.rating} t={t} />
           </div>
+          <button className="full-width-btn" aria-label={t.checkAvailability}>
+            {t.checkAvailability}
+          </button>
         </div>
       </Link>
     </article>
