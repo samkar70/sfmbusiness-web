@@ -47,7 +47,7 @@ export default async function RootLayout({ children, params }) {
       <body className={font.className}>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(dealer) }} />
         <div className="app">{children}</div>
-        <InstallPrompt t={{ install: t.install, installSub: t.installSub, installBtn: t.installBtn, installIos: t.installIos, dismiss: t.dismiss }} />
+        <InstallPrompt t={{ install: t.install, installSub: t.installSub, installBtn: t.installBtn, installIos: t.installIos, dismiss: t.dismiss, iosStep1: t.iosStep1, iosStep2: t.iosStep2, iosGotIt: t.iosGotIt }} />
       </body>
     </html>
   );
