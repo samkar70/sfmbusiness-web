@@ -5,13 +5,13 @@ import { LANGS, SITE } from '@/lib/site';
 import { getT } from '@/lib/i18n';
 import InstallPrompt from '@/components/InstallPrompt';
 
+export const dynamic = 'force-dynamic';
+
 const font = Outfit({ subsets: ['latin'], display: 'swap' });
 
 export const viewport = {
   width: 'device-width', initialScale: 1, themeColor: '#0b0f1a', viewportFit: 'cover',
 };
-
-export function generateStaticParams() { return LANGS.map((lang) => ({ lang })); }
 
 export async function generateMetadata({ params }) {
   const { lang } = await params;
