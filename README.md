@@ -1,0 +1,25 @@
+# sfmbusiness-web
+
+Mobile-first public inventory for **SFM Auto Sales** (www.usedcarventa.com).
+Next.js 15 (server-rendered for SEO) + Turso (read-only) + installable PWA. Bilingual EN/ES (auto-detected from the phone language).
+
+## Features
+- Search + filters: make, model, max price, min year, max mileage, sort
+- Vehicle pages with swipe gallery, specs, schema.org `Car`/`Offer` JSON-LD
+- Price indicator (Great / Good / Fair / Higher) vs comparable inventory
+- Contact: call, WhatsApp, message form (opens WhatsApp prefilled)
+- SEO: sitemap.xml, robots.txt, hreflang, canonical, Open Graph, AutoDealer JSON-LD
+- PWA: manifest, generated icons, service worker, "Add to Home Screen" prompt
+- Only vehicles with estado `Available` / `In Shop` are public (never `Sold`)
+
+## Setup
+```bash
+cp .env.example .env.local   # fill TURSO_AUTH_TOKEN (use a read-only token)
+npm install
+npm run dev
+```
+Env vars (server-only, never prefixed with `NEXT_PUBLIC_`): `TURSO_DB_URL`, `TURSO_AUTH_TOKEN`.
+Optional: `NEXT_PUBLIC_SITE_URL` (default https://www.usedcarventa.com).
+
+## Deploy
+Import the repo in Vercel, add the env vars, attach the domain `www.usedcarventa.com`.
