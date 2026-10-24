@@ -3,6 +3,7 @@ import { useRef, useState } from 'react';
 import Link from 'next/link';
 import { money } from '@/lib/cars';
 import { HeartIcon, XMarkIcon } from '@/components/Icons';
+import { useFavorites } from '@/context/FavoritesContext';
 
 const MAX_DOTS = 5;
 const SWIPE_MIN_PX = 40;
@@ -12,6 +13,8 @@ export const milesText = (c, t) => (c.miles ? `${Number(c.miles).toLocaleString(
 
 export default function CarCard({ car, lang, t, index = 0 }) {
   const count = Number(car.photos) || 0;
+  const { isFavorite, toggleFavorite } = useFavorites();
+  const fav = isFavorite(car.id);
   const [currentPhoto, setCurrentPhoto] = useState(0);
   const touchStartX = useRef(null);
   const swiped = useRef(false);
@@ -88,8 +91,15 @@ export default function CarCard({ car, lang, t, index = 0 }) {
           </span>
           {/* Top-right action buttons */}
           <div className="top-actions">
-            <button className="favorite-btn" aria-label={t.favorite}>
-              <HeartIcon />
+            <button
+              type="button"
+              className="favorite-btn"
+              aria-label={t.favorite}
+              aria-pressed={fav}
+              onClick={(e) => { e.preventDefault(); e.stopPropagation(); toggleFavorite(car.id); }}
+              style={{ color: fav ? '#E63946' : 'rgba(255,255,255,0.75)' }}
+            >
+              <HeartIcon fill={fav ? '#E63946' : 'none'} />
             </button>
             <button className="hide-btn" aria-label={t.hide}>
               <XMarkIcon />

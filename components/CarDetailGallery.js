@@ -2,6 +2,7 @@
 import React, { useState, useRef } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { useFavorites } from '@/context/FavoritesContext';
 
 // Inline Heart icon SVG to avoid external imports
 const HeartIcon = ({ filled }) => (
@@ -37,7 +38,8 @@ export default function CarDetailGallery({
   const router = useRouter();
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [activeIdx, setActiveIdx] = useState(0);
-  const [fav, setFav] = useState(false);
+  const { isFavorite, toggleFavorite } = useFavorites();
+  const fav = isFavorite(id);
 
   const photos = Array.from({ length: count });
 
@@ -91,7 +93,7 @@ export default function CarDetailGallery({
         <button className="round" onClick={() => router.back()} aria-label={backLabel} style={buttonStyle}>←</button>
         <div style={{ display: 'flex', gap: '8px' }}>
           <button className="round" onClick={share} aria-label={shareLabel} style={shareBtnStyle}>⤴</button>
-          <button className="round" aria-label="favorite" onClick={() => setFav(!fav)} style={{ ...buttonStyle, color: fav ? '#e63946' : 'inherit' }}><HeartIcon filled={fav} /></button>
+          <button className="round" aria-label="favorite" onClick={() => toggleFavorite(id)} aria-pressed={fav} style={{ ...buttonStyle, color: fav ? '#E63946' : 'rgba(255,255,255,0.75)' }}><HeartIcon filled={fav} /></button>
         </div>
       </div>
 

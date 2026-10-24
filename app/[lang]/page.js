@@ -1,5 +1,5 @@
 import Header from '@/components/Header';
-import CarCard from '@/components/CarCard';
+import CarList, { SavedPill } from '@/components/CarList';
 import { getCars, filterCars } from '@/lib/cars';
 import { getT } from '@/lib/i18n';
 import { SITE } from '@/lib/site';
@@ -38,17 +38,24 @@ export default async function Home({ params, searchParams }) {
       <Header lang={lang} t={t} />
       <main>
         <section className="hero">
-          <h1>{t.tagline}</h1>
-          <p>{SITE.street}, {SITE.city}, {SITE.region} {SITE.zip}</p>
+          <span className="loc-badge">📍 Alvarado, TX</span>
+          <h1>{t.heroTitle}</h1>
         </section>
 
         <form className="search" method="GET" action={`/${lang}`} role="search">
           <label className="sbox">
-            <span aria-hidden>🔍</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7" /><line x1="21" y1="21" x2="16.5" y2="16.5" /></svg>
             <input name="q" defaultValue={sp.q || ''} placeholder={t.search} enterKeyHint="search" aria-label={t.search} />
           </label>
+          <div className="frow">
           <details className="filters" open={active > 0}>
-            <summary>⚙️ {t.filters}{active > 0 ? ` (${active})` : ''}<span>▾</span></summary>
+            <summary>
+              <span className="fsum">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><line x1="4" y1="6" x2="20" y2="6" /><line x1="7" y1="12" x2="17" y2="12" /><line x1="10" y1="18" x2="14" y2="18" /></svg>
+                {t.filters}{active > 0 ? ` (${active})` : ''}
+              </span>
+              <span>▾</span>
+            </summary>
             <div className="fgrid">
               <label>{t.make}
                 <select name="make" defaultValue={sp.make || ''}>
@@ -95,13 +102,21 @@ export default async function Home({ params, searchParams }) {
               <button className="btn primary" type="submit">{t.apply}</button>
             </div>
           </details>
+          <SavedPill label={t.saved} allIds={all.map((c) => String(c.id))} />
+          </div>
         </form>
 
-        <p className="count" aria-live="polite">{t.results(cars.length)}</p>
-        <div className="list">
-          {cars.map((c, i) => <CarCard key={c.id} car={c} lang={lang} t={tCard} index={i} />)}
-        </div>
-        {cars.length === 0 && <p className="empty">{t.noResults}</p>}
+        <CarList
+          cars={cars}
+          lang={lang}
+          t={tCard}
+          one={t.results(1).replace(/^1 /, '')}
+          many={t.results(2).replace(/^2 /, '')}
+          noResults={t.noResults}
+          noSaved={t.noSaved}
+          noSavedSub={t.noSavedSub}
+          exploreLabel={t.exploreCars}
+        />
 
         <footer className="foot">
           <b>{t.visit}</b>
