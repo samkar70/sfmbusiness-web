@@ -1,17 +1,35 @@
-import { SITE, LANGS } from '@/lib/site';
-import { getCars } from '@/lib/cars';
-
-export const dynamic = 'force-dynamic';
+import { getCars } from '@/lib/db';
 
 export default async function sitemap() {
-  const cars = await getCars();
-  const alt = (path) => ({ languages: Object.fromEntries(LANGS.map((l) => [l, `${SITE.url}/${l}${path}`])) });
-  const entries = [];
-  for (const l of LANGS) {
-    entries.push({ url: `${SITE.url}/${l}`, changeFrequency: 'daily', priority: 1, alternates: alt('') });
-    for (const c of cars) {
-      entries.push({ url: `${SITE.url}/${l}/cars/${c.slug}`, changeFrequency: 'daily', priority: 0.8, alternates: alt(`/cars/${c.slug}`) });
-    }
+  const baseUrl = 'https://www.usedcarventa.com';
+  let cars = [];
+  try {
+    cars = await getCars();
+  } catch (e) {
+    cars = [];
   }
-  return entries;
+
+  const staticRoutes = ['', '/es', '/en'].map((route) => ({
+    url: `${baseUrl}${route}`,
+    lastModified: new Date(),
+    changeFrequency: 'daily',
+    priority: 1.0,
+  }));
+
+  const carRoutes = cars.flatMap((car) => [
+    {
+      url: `${baseUrl}/es/cars/${car.slug || car.id}`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/en/cars/${car.slug || car.id}`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    },
+  ]);
+
+  return [...staticRoutes, ...carRoutes];
 }
