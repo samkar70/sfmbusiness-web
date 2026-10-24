@@ -1,25 +1,28 @@
 import './globals.css';
 
 export const metadata = {
-  metadataBase: new URL('https://www.usedcarventa.com'),
-  title: 'SFM Auto Sales | Autos y camionetas usados en Alvarado, TX',
-  description: 'Inventario de autos y camionetas usados en Alvarado, TX. Calidad, financiamiento y el mejor precio garantizado.',
+  metadataBase: new URL('https://www.sfmautosales.com'),
+  title: {
+    default: 'SFM Auto Sales | Used Cars & Trucks in Alvarado, TX',
+    template: '%s | SFM Auto Sales',
+  },
+  description: 'Used cars and trucks in Alvarado, TX. Autos y camionetas usados con financiamiento y el mejor precio en Alvarado, TX.',
   alternates: {
     canonical: '/',
   },
   openGraph: {
-    title: 'SFM Auto Sales | Autos y camionetas usados en Alvarado, TX',
-    description: 'Encuentra tu próximo auto o camioneta en Alvarado, TX.',
-    url: 'https://www.usedcarventa.com',
+    title: 'SFM Auto Sales | Used Cars & Trucks in Alvarado, TX',
+    description: 'Find your next vehicle in Alvarado, TX. Encuentra tu próximo auto o camioneta.',
+    url: 'https://www.sfmautosales.com',
     siteName: 'SFM Auto Sales',
-    locale: 'es_US',
+    locale: 'en_US',
     type: 'website',
   },
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="es">
+    <html lang="en">
       <body>{children}</body>
     </html>
   );
