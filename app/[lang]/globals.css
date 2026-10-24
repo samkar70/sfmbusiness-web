@@ -1,6 +1,6 @@
 :root{
   --bg:#0b0f1a; --card:#141a2b; --card2:#1b2338; --line:#26304a;
-  --txt:#f3f6fc; --mut:#8b97b3; --brand:#2563eb; --brand2:#60a5fa;
+  --txt:#f3f6fc; --mut:#8b97b3; --brand:#FFCD00; --brand2:#FFCD00; --sport:#E63946;
   --green:#22c55e; --amber:#f59e0b; --red:#ef4444; --wa:#25d366;
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
@@ -13,11 +13,12 @@ button,input,select,textarea{font:inherit;color:inherit}
 
 .top{position:sticky;top:0;z-index:20;padding:calc(10px + env(safe-area-inset-top)) 16px 10px;background:rgba(11,15,26,.88);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:10px}
 .logo{font-weight:900;font-size:22px;letter-spacing:-.5px;line-height:1}
-.logo b{color:var(--brand2)}
+.logo .sfm{color:#E63946}
+.logo b{color:#FFFFFF}
 .logo small{display:block;font-size:10px;font-weight:600;letter-spacing:2px;color:var(--mut);margin-top:3px;text-transform:uppercase}
 .lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:99px;padding:3px}
 .lang a{padding:5px 11px;border-radius:99px;font-size:12px;font-weight:700;color:var(--mut)}
-.lang a.on{background:var(--brand);color:#fff}
+.lang a.on{background:#FFCD00;color:#000}
 
 .hero{padding:22px 16px 6px}
 .hero h1{font-size:26px;line-height:1.15;font-weight:800;letter-spacing:-.5px}
@@ -29,7 +30,7 @@ button,input,select,textarea{font:inherit;color:inherit}
 .sbox input::placeholder{color:var(--mut)}
 .row{display:flex;gap:8px}
 .chip{flex:none;display:inline-flex;align-items:center;gap:6px;background:var(--card);border:1px solid var(--line);border-radius:99px;padding:9px 14px;font-size:13px;font-weight:600;cursor:pointer}
-.chip.on{border-color:var(--brand2);background:#12234a;color:var(--brand2)}
+.chip.on{border-color:#FFCD00;background:#2b2500;color:#FFCD00}
 details.filters{background:var(--card);border:1px solid var(--line);border-radius:18px}
 details.filters>summary{list-style:none;cursor:pointer;padding:13px 16px;font-weight:700;font-size:14px;display:flex;justify-content:space-between;align-items:center}
 details.filters>summary::-webkit-details-marker{display:none}
@@ -41,7 +42,7 @@ details.filters[open]>summary{border-bottom:1px solid var(--line)}
 .fact{display:flex;gap:8px;padding:0 14px 14px}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:50px;border-radius:99px;border:0;font-weight:800;font-size:15px;cursor:pointer;padding:0 20px;transition:transform .12s}
 .btn:active{transform:scale(.97)}
-.btn.primary{background:var(--brand);color:#fff;flex:1}
+.btn.primary{background:#FFCD00;color:#000;font-weight:700;flex:1}
 .btn.ghost{background:var(--card2);border:1px solid var(--line)}
 .btn.wa{background:var(--wa);color:#04210f}
 .btn.call{background:#fff;color:#0b0f1a}
@@ -101,7 +102,7 @@ details.filters[open]>summary{border-bottom:1px solid var(--line)}
 .foot{padding:26px 16px;color:var(--mut);font-size:13px;display:grid;gap:6px}
 .foot b{color:var(--txt)}
 .install{position:fixed;z-index:40;left:12px;right:12px;bottom:calc(84px + env(safe-area-inset-bottom));max-width:496px;margin:0 auto;background:var(--card2);border:1px solid var(--brand);border-radius:20px;padding:14px;display:flex;gap:12px;align-items:center;box-shadow:0 12px 40px #000a;animation:rise .4s both}
-.install .ic{width:46px;height:46px;border-radius:12px;background:linear-gradient(135deg,#1d4ed8,#0b0f1a);display:grid;place-items:center;font-weight:900;font-size:13px;flex:none}
+.install .ic{width:46px;height:46px;border-radius:12px;background:linear-gradient(135deg,#0b0f1a,#26304a);color:#E63946;border:1px solid #FFCD00;display:grid;place-items:center;font-weight:900;font-size:13px;flex:none}
 .install p{flex:1;font-size:13px;color:var(--mut)}.install p b{display:block;color:var(--txt);font-size:14px}
 .install .btn{height:40px;font-size:13px}
 .x{background:none;border:0;color:var(--mut);font-size:20px;cursor:pointer}
@@ -117,5 +118,5 @@ details.filters[open]>summary{border-bottom:1px solid var(--line)}
 .top-actions {position:absolute;top:12px;right:12px;display:flex;gap:8px;}
 .favorite-btn, .hide-btn {background:rgba(0,0,0,0.4);border:none;border-radius:50%;width:36px;height:36px;display:grid;place-items:center;color:#fff;cursor:pointer;}
 .favorite-btn:hover, .hide-btn:hover {background:rgba(0,0,0,0.6);}
-.full-width-btn {width:100%;background:var(--brand);color:#fff;border:none;border-radius:12px;padding:12px;font-weight:700;cursor:pointer;transition:background .2s;}
-.full-width-btn:hover {background:var(--brand2);}
+.full-width-btn {width:100%;background:#FFCD00;color:#000;border:none;border-radius:12px;padding:12px;font-weight:700;cursor:pointer;transition:background .2s;}
+.full-width-btn:hover {background:#FFDB4D;}

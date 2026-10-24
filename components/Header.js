@@ -4,7 +4,7 @@ export default function Header({ lang, t, path = '' }) {
   return (
     <header className="top">
       <Link href={`/${lang}`} className="logo" aria-label="SFM Auto Sales">
-        SFM <b>Auto Sales</b>
+        <span className="sfm" style={{ color: '#E63946' }}>SFM</span> <b style={{ color: '#FFFFFF' }}>Auto Sales</b>
         <small>Alvarado · TX</small>
       </Link>
       <nav className="lang" aria-label="Language">

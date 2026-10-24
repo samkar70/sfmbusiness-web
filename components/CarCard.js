@@ -9,7 +9,7 @@ export function PriceBadge({ rating, t }) {
   return <span className={`badge ${rating}`} title={t.priceInfo}><i />{t[rating]}</span>;
 }
 
-export const milesText = (c, t) => (c.miles ? `${c.miles.toLocaleString('en-US')} ${t.mi}` : t.milesNA);
+export const milesText = (c, t) => (c.miles ? `${Number(c.miles).toLocaleString('en-US')} ${t?.mi || t?.miles || 'mi'}` : (t?.milesNA || ''));
 
 export default function CarCard({ car, lang, t, index = 0 }) {
   const pm = monthly(car.price);
