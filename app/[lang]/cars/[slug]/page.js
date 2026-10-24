@@ -2,9 +2,8 @@ import { notFound } from 'next/navigation';
 import Header from '@/components/Header';
 import CarDetailGallery from '@/components/CarDetailGallery';
 import ContactForm from '@/components/ContactForm';
-import { PriceBadge } from '@/components/CarCard';
 import { milesText } from '@/lib/utils';
-import { getCarById, idFromSlug, money, monthly } from '@/lib/cars';
+import { getCarById, idFromSlug, money } from '@/lib/cars';
 import { getT } from '@/lib/i18n';
 import { SITE } from '@/lib/site';
 
@@ -15,7 +14,6 @@ export async function generateMetadata({ params }) {
   const car = await getCarById(idFromSlug(slug));
   if (!car) return {};
   const t = getT(lang);
-  const badgeProps = {priceInfo: t.priceInfo, great: t.great, good: t.good, fair: t.fair, high: t.high};
   const price = money(car.price);
   const desc = lang === 'es'
     ? `${car.title} usado en venta en Alvarado, TX${price ? ` por ${price}` : ''}. ${milesText(car, t)}. Llame o escriba por WhatsApp al ${SITE.phoneDisplay}.`
@@ -38,8 +36,6 @@ export default async function CarPage({ params }) {
   const car = await getCarById(idFromSlug(slug));
   if (!car) notFound();
   const t = getT(lang);
-  const badgeProps = {priceInfo: t.priceInfo, great: t.great, good: t.good, fair: t.fair, high: t.high};
-  const pm = monthly(car.price);
   const url = `${SITE.url}/${lang}/cars/${car.slug}`;
   const waText = encodeURIComponent(t.waText(car.title));
 
@@ -88,13 +84,8 @@ export default async function CarPage({ params }) {
             </p>
           </div>
           <div className="cfoot" style={{ margin: 0 }}>
-            <div>
-              <div className="price">{money(car.price) || t.callForPrice}</div>
-              {pm && <div className="pm">~${pm} {t.est}</div>}
-            </div>
-            <PriceBadge rating={car.rating} t={badgeProps} />
+            <div className="price">{money(car.price) || t.callForPrice}</div>
           </div>
-          {pm && <p className="note">{t.estNote} {t.priceInfo}</p>}
 
           <div className="stats">
             <div className="stat"><b>{car.year}</b><span>{t.year}</span></div>

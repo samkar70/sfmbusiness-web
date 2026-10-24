@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
@@ -48,6 +48,16 @@ export default function CarDetailGallery({
   const closeLightbox = () => setLightboxOpen(false);
   const prev = () => setActiveIdx((i) => (i - 1 + count) % count);
   const next = () => setActiveIdx((i) => (i + 1) % count);
+
+  const touchStartX = useRef(null);
+  const onTouchStart = (e) => { touchStartX.current = e.touches[0].clientX; };
+  const onTouchEnd = (e) => {
+    if (touchStartX.current === null) return;
+    const dx = e.changedTouches[0].clientX - touchStartX.current;
+    touchStartX.current = null;
+    if (Math.abs(dx) < 50) return;
+    if (dx < 0) next(); else prev();
+  };
 
   const share = async () => {
     const data = { title: shareTitle, url: location.href };
@@ -115,9 +125,14 @@ export default function CarDetailGallery({
         <div className="lightbox" onClick={closeLightbox} style={lightboxStyle}>
           <div className="lightbox-content" onClick={(e) => e.stopPropagation()} style={lightboxContentStyle}>
             <button type="button" className="lightbox-close" aria-label="Close" onClick={(e) => { e.stopPropagation(); closeLightbox(); }} style={closeBtnStyle}>✕</button>
-            <button type="button" className="nav-btn left" onClick={(e) => { e.stopPropagation(); prev(); }} style={navBtnStyle('left')}>←</button>
-            <Image src={imgUrl(id, activeIdx)} alt={`${alt} ${activeIdx + 1}`} fill style={{ objectFit: 'contain', pointerEvents: 'none' }} />
-            <button type="button" className="nav-btn right" onClick={(e) => { e.stopPropagation(); next(); }} style={navBtnStyle('right')}>→</button>
+            <div
+              className="lightbox-image"
+              onTouchStart={onTouchStart}
+              onTouchEnd={onTouchEnd}
+              style={{ position: 'absolute', inset: 0, touchAction: 'pan-y' }}
+            >
+              <Image src={imgUrl(id, activeIdx)} alt={`${alt} ${activeIdx + 1}`} fill style={{ objectFit: 'contain', pointerEvents: 'none' }} />
+            </div>
             <div style={counterStyle}>{activeIdx + 1} / {count}</div>
           </div>
         </div>
@@ -185,22 +200,6 @@ const closeBtnStyle = {
   fontSize: '24px',
   cursor: 'pointer',
 };
-
-const navBtnStyle = (side) => ({
-  position: 'absolute',
-  zIndex: 20,
-  top: '50%',
-  [side]: '10px',
-  transform: 'translateY(-90%)',
-  background: 'rgba(0,0,0,0.5)',
-  border: 'none',
-  color: '#fff',
-  fontSize: '24px',
-  width: '40px',
-  height: '40px',
-  borderRadius: '50%',
-  cursor: 'pointer',
-});
 
 const counterStyle = {
   position: 'absolute',
