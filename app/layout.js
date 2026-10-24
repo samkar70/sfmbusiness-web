@@ -10,6 +10,9 @@ export const metadata = {
   alternates: {
     canonical: '/',
   },
+  verification: {
+    google: '6JzKUzA2wNXJgxmNaK7Ob4hUyYlJLtAxLBpuFClqN94',
+  },
   openGraph: {
     title: 'SFM Auto Sales | Used Cars & Trucks in Alvarado, TX',
     description: 'Find your next vehicle in Alvarado, TX. Encuentra tu próximo auto o camioneta.',
