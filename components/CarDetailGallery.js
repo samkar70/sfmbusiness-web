@@ -90,7 +90,7 @@ export default function CarDetailGallery({
       >
         <button className="round" onClick={() => router.back()} aria-label={backLabel} style={buttonStyle}>←</button>
         <div style={{ display: 'flex', gap: '8px' }}>
-          <button className="round" onClick={share} aria-label={shareLabel} style={buttonStyle}>⤴</button>
+          <button className="round" onClick={share} aria-label={shareLabel} style={shareBtnStyle}>⤴</button>
           <button className="round" aria-label="favorite" onClick={() => setFav(!fav)} style={{ ...buttonStyle, color: fav ? '#e63946' : 'inherit' }}><HeartIcon filled={fav} /></button>
         </div>
       </div>
@@ -154,6 +154,17 @@ const buttonStyle = {
   justifyContent: 'center',
   fontSize: '18px',
   cursor: 'pointer',
+};
+
+const shareBtnStyle = {
+  ...buttonStyle,
+  background: '#E63946',
+  color: '#FFFFFF',
+  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.4)',
+  borderRadius: '50%',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
 };
 
 const overlayBadgeStyle = {
