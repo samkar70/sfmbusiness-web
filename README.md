@@ -1,6 +1,6 @@
 # sfmbusiness-web
 
-Mobile-first public inventory for **SFM Auto Sales** (www.usedcarventa.com).
+Mobile-first public inventory for **SFM Auto Sales** (www.sfmautosales.com).
 Next.js 15 (server-rendered for SEO) + Turso (read-only) + installable PWA. Bilingual EN/ES (auto-detected from the phone language).
 
 ## Features
@@ -19,7 +19,12 @@ npm install
 npm run dev
 ```
 Env vars (server-only; `VITE_TURSO_DB_URL` / `VITE_TURSO_AUTH_TOKEN` are also accepted as fallback): `TURSO_DB_URL`, `TURSO_AUTH_TOKEN`.
-Optional: `NEXT_PUBLIC_SITE_URL` (default https://www.usedcarventa.com).
+Optional: `NEXT_PUBLIC_SITE_URL` (default https://www.sfmautosales.com), `HEALTH_CHECK_TOKEN` (enables details on `/api/health` when sent as `Authorization: Bearer <token>`).
+
+## Scripts
+- `npm run dev` / `npm run build` / `npm run start`
+- `npm run lint`: ESLint with the Next.js rules
+- `npm test`: unit tests for pricing, filters and slugs (`tests/`)
 
 ## Deploy
-Import the repo in Vercel, add the env vars, attach the domain `www.usedcarventa.com`.
+Import the repo in Vercel, add the env vars, attach the domain `www.sfmautosales.com`. Configure `usedcarventa.com` (if still owned) to 301-redirect to `www.sfmautosales.com` at the registrar or Vercel.

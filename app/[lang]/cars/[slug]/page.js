@@ -2,8 +2,10 @@ import { notFound } from 'next/navigation';
 import Header from '@/components/Header';
 import CarDetailGallery from '@/components/CarDetailGallery';
 import ContactForm from '@/components/ContactForm';
+import Unavailable from '@/components/Unavailable';
 import { milesText } from '@/lib/utils';
-import { getCarById, idFromSlug, money } from '@/lib/cars';
+import { getCarById, idFromSlug } from '@/lib/cars';
+import { money } from '@/lib/inventory';
 import { getT } from '@/lib/i18n';
 import { SITE } from '@/lib/site';
 
@@ -11,7 +13,12 @@ export const dynamic = 'force-dynamic';
 
 export async function generateMetadata({ params }) {
   const { lang, slug } = await params;
-  const car = await getCarById(idFromSlug(slug));
+  let car;
+  try {
+    car = await getCarById(idFromSlug(slug));
+  } catch {
+    return {};
+  }
   if (!car) return {};
   const t = getT(lang);
   const price = money(car.price);
@@ -33,9 +40,14 @@ export async function generateMetadata({ params }) {
 
 export default async function CarPage({ params }) {
   const { lang, slug } = await params;
-  const car = await getCarById(idFromSlug(slug));
-  if (!car) notFound();
   const t = getT(lang);
+  let car;
+  try {
+    car = await getCarById(idFromSlug(slug));
+  } catch {
+    return <Unavailable lang={lang} t={t} />;
+  }
+  if (!car) notFound();
   const url = `${SITE.url}/${lang}/cars/${car.slug}`;
   const waText = encodeURIComponent(t.waText(car.title));
 
@@ -75,7 +87,8 @@ export default async function CarPage({ params }) {
       <Header lang={lang} t={t} path={`/cars/${car.slug}`} />
       <main>
         <CarDetailGallery id={car.id} count={car.photos} alt={car.title} noPhoto={t.noPhoto}
-                 backHref={`/${lang}`} backLabel={t.back} shareLabel={t.share} shareTitle={car.title} />
+                 backLabel={t.back} shareLabel={t.share} shareTitle={car.title}
+                 favoriteLabel={t.favorite} closeLabel={t.close} morePhotos={t.morePhotos} />
         <div className="sheet">
           <div>
             <h1 className="h2">{car.title}</h1>

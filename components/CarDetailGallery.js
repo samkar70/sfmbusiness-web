@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useRef } from 'react';
+import { useState, useRef } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useFavorites } from '@/context/FavoritesContext';
@@ -30,18 +30,18 @@ export default function CarDetailGallery({
   count,
   alt,
   noPhoto,
-  backHref,
   backLabel,
   shareLabel,
   shareTitle,
+  favoriteLabel,
+  closeLabel,
+  morePhotos, // template with {n}, e.g. "+{n} more photos"
 }) {
   const router = useRouter();
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [activeIdx, setActiveIdx] = useState(0);
   const { isFavorite, toggleFavorite } = useFavorites();
   const fav = isFavorite(id);
-
-  const photos = Array.from({ length: count });
 
   const openLightbox = (idx) => {
     setActiveIdx(idx);
@@ -72,6 +72,9 @@ export default function CarDetailGallery({
 
   if (count === 0) return <div className="nophoto">{noPhoto}</div>;
 
+  // Mosaic uses only photos that exist: main (0), up to two side photos (1-2), bottom (3).
+  const sidePhotos = [1, 2].filter((i) => i < count);
+  const hasBottom = count > 3;
   const extraCount = Math.max(0, count - 4);
 
   return (
@@ -93,7 +96,7 @@ export default function CarDetailGallery({
         <button className="round" onClick={() => router.back()} aria-label={backLabel} style={buttonStyle}>←</button>
         <div style={{ display: 'flex', gap: '8px' }}>
           <button className="round" onClick={share} aria-label={shareLabel} style={shareBtnStyle}>⤴</button>
-          <button className="round" aria-label="favorite" onClick={() => toggleFavorite(id)} aria-pressed={fav} style={{ ...buttonStyle, color: fav ? '#E63946' : 'rgba(255,255,255,0.75)' }}><HeartIcon filled={fav} /></button>
+          <button className="round" aria-label={favoriteLabel} onClick={() => toggleFavorite(id)} aria-pressed={fav} style={{ ...buttonStyle, color: fav ? '#E63946' : 'rgba(255,255,255,0.75)' }}><HeartIcon filled={fav} /></button>
         </div>
       </div>
 
@@ -103,30 +106,34 @@ export default function CarDetailGallery({
         <div className="gallery-main" onClick={() => openLightbox(0)} style={{ width: '100%', height: '260px', position: 'relative', cursor: 'pointer' }}>
           <Image src={imgUrl(id, 0)} alt={alt} fill style={{ objectFit: 'cover' }} priority />
         </div>
-        {/* Two medium photos */}
-        <div className="gallery-side" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4px', height: '140px' }}>
-          {photos.slice(1, 3).map((_, i) => (
-            <div key={i} onClick={() => openLightbox(i + 1)} style={{ position: 'relative', cursor: 'pointer' }}>
-              <Image src={imgUrl(id, i + 1)} alt={`${alt} ${i + 2}`} fill style={{ objectFit: 'cover' }} />
-            </div>
-          ))}
-        </div>
-        {/* Bottom wide photo */}
-        <div className="gallery-bottom" onClick={() => openLightbox(3)} style={{ width: '100%', height: '200px', position: 'relative', cursor: 'pointer' }}>
-          <Image src={imgUrl(id, 3)} alt={`${alt} 4`} fill style={{ objectFit: 'cover' }} />
-          {extraCount > 0 && (
-            <div className="overlay-badge" style={overlayBadgeStyle} onClick={() => openLightbox(3)}>
-              +{extraCount} fotos
-            </div>
-          )}
-        </div>
+        {/* Side photos (only those that exist) */}
+        {sidePhotos.length > 0 && (
+          <div className="gallery-side" style={{ display: 'grid', gridTemplateColumns: `repeat(${sidePhotos.length}, 1fr)`, gap: '4px', height: '140px' }}>
+            {sidePhotos.map((i) => (
+              <div key={i} onClick={() => openLightbox(i)} style={{ position: 'relative', cursor: 'pointer' }}>
+                <Image src={imgUrl(id, i)} alt={`${alt} ${i + 1}`} fill style={{ objectFit: 'cover' }} />
+              </div>
+            ))}
+          </div>
+        )}
+        {/* Bottom wide photo, only when there is a fourth photo */}
+        {hasBottom && (
+          <div className="gallery-bottom" onClick={() => openLightbox(3)} style={{ width: '100%', height: '200px', position: 'relative', cursor: 'pointer' }}>
+            <Image src={imgUrl(id, 3)} alt={`${alt} 4`} fill style={{ objectFit: 'cover' }} />
+            {extraCount > 0 && (
+              <div className="overlay-badge" style={overlayBadgeStyle} onClick={() => openLightbox(3)}>
+                {morePhotos.replace('{n}', extraCount)}
+              </div>
+            )}
+          </div>
+        )}
       </div>
 
       {/* Lightbox */}
       {lightboxOpen && (
         <div className="lightbox" onClick={closeLightbox} style={lightboxStyle}>
           <div className="lightbox-content" onClick={(e) => e.stopPropagation()} style={lightboxContentStyle}>
-            <button type="button" className="lightbox-close" aria-label="Close" onClick={(e) => { e.stopPropagation(); closeLightbox(); }} style={closeBtnStyle}>✕</button>
+            <button type="button" className="lightbox-close" aria-label={closeLabel} onClick={(e) => { e.stopPropagation(); closeLightbox(); }} style={closeBtnStyle}>✕</button>
             <div
               className="lightbox-image"
               onTouchStart={onTouchStart}

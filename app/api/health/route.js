@@ -1,23 +1,24 @@
-import { createClient } from '@libsql/client';
+import { countPublicVehicles } from '@/lib/cars';
 
 export const dynamic = 'force-dynamic';
 
-// Diagnostics: shows whether env vars are present and whether Turso answers. No secrets returned.
-export async function GET() {
-  const url = process.env.TURSO_DB_URL || process.env.VITE_TURSO_DB_URL || '';
-  const token = process.env.TURSO_AUTH_TOKEN || process.env.VITE_TURSO_AUTH_TOKEN || '';
-  const info = {
-    hasUrl: !!url, urlHost: url.replace(/^libsql:\/\//, '').slice(0, 60),
-    urlHasWhitespaceOrQuotes: /\s|["']/.test(url),
-    hasToken: !!token, tokenLength: token.length,
-    tokenHasWhitespaceOrQuotes: /\s|["']/.test(token),
-    tokenLooksLikeJwt: token.split('.').length === 3,
-  };
+// Uptime check. Returns only ok/status to the public. Details are returned only when the request
+// carries "Authorization: Bearer <HEALTH_CHECK_TOKEN>", so the database host and credentials
+// metadata are never exposed.
+export async function GET(req) {
+  const expected = process.env.HEALTH_CHECK_TOKEN;
+  const authorized = !!expected && req.headers.get('authorization') === `Bearer ${expected}`;
   try {
-    const c = createClient({ url: url.trim(), authToken: token.trim() });
-    const r = await c.execute("SELECT count(*) AS n FROM Vehiculos WHERE LOWER(estado) IN ('available','in shop')");
-    return Response.json({ ok: true, publicVehicles: Number(r.rows[0].n), ...info });
+    const publicVehicles = await countPublicVehicles();
+    return Response.json(
+      authorized ? { ok: true, publicVehicles } : { ok: true },
+      { headers: { 'Cache-Control': 'no-store' } },
+    );
   } catch (e) {
-    return Response.json({ ok: false, error: String(e?.message || e), ...info }, { status: 500 });
+    console.error('[health] database check failed:', e?.message);
+    return Response.json(
+      authorized ? { ok: false, error: String(e?.message || e) } : { ok: false },
+      { status: 503, headers: { 'Cache-Control': 'no-store' } },
+    );
   }
 }

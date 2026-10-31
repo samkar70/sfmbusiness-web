@@ -1,6 +1,8 @@
 import Header from '@/components/Header';
 import CarList, { SavedPill } from '@/components/CarList';
-import { getCars, filterCars } from '@/lib/cars';
+import Unavailable from '@/components/Unavailable';
+import { getCars } from '@/lib/cars';
+import { filterCars } from '@/lib/inventory';
 import { getT } from '@/lib/i18n';
 import { SITE } from '@/lib/site';
 
@@ -12,6 +14,7 @@ export async function generateMetadata({ params }) {
   return { title: { absolute: `${SITE.name} | ${t.metaTitle}` }, description: t.metaDesc };
 }
 
+const SITE_HOST = new URL(SITE.url).host;
 const PRICES = [5000, 8000, 10000, 15000, 20000, 30000];
 const MILES = [50000, 80000, 100000, 150000];
 
@@ -19,8 +22,16 @@ export default async function Home({ params, searchParams }) {
   const { lang } = await params;
   const sp = await searchParams;
   const t = getT(lang);
-  const tCard = {available: t.available, soon: t.soon, favorite: t.favorite, hide: t.hide, checkAvailability: t.checkAvailability, priceInfo: t.priceInfo, great: t.great, good: t.good, fair: t.fair, high: t.high};
-  const all = await getCars();
+  const tCard = {
+    available: t.available, soon: t.soon, favorite: t.favorite, noPhoto: t.noPhoto, mi: t.mi, milesNA: t.milesNA,
+    callForPrice: t.callForPrice, viewDetails: t.viewDetails,
+  };
+  let all;
+  try {
+    all = await getCars();
+  } catch {
+    return <Unavailable lang={lang} t={t} />;
+  }
   const cars = filterCars(all, sp);
   const makes = [...new Set(all.map((c) => c.make))].sort();
   const models = [...new Set(all.filter((c) => !sp.make || c.make === sp.make).map((c) => c.model))].sort();
@@ -123,7 +134,7 @@ export default async function Home({ params, searchParams }) {
           <span>{SITE.street}, {SITE.city}, {SITE.region} {SITE.zip}</span>
           <span>{t.hours}</span>
           <a href={`https://www.google.com/maps/dir/?api=1&destination=${SITE.lat},${SITE.lng}`} target="_blank" rel="noopener">📍 {t.directions}</a>
-          <span>© {new Date().getFullYear()} {SITE.name} · usedcarventa.com</span>
+          <span>© {new Date().getFullYear()} {SITE.name} · {SITE_HOST}</span>
         </footer>
       </main>
       <nav className="cta" aria-label="Contact">

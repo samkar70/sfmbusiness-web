@@ -22,17 +22,17 @@ export async function generateMetadata({ params }) {
     title: { default: `${SITE.name} | ${t.metaTitle}`, template: `%s | ${SITE.name}` },
     description: t.metaDesc,
     applicationName: SITE.name,
-    keywords: ['used cars Alvarado TX', 'cars for sale Alvarado Texas', 'used trucks DFW', 'autos usados Dallas Fort Worth', 'SFM Auto Sales', 'usedcarventa'],
+    keywords: ['used cars Alvarado TX', 'cars for sale Alvarado Texas', 'used trucks DFW', 'autos usados Dallas Fort Worth', 'SFM Auto Sales'],
     alternates: { canonical: `/${lang}`, languages: { en: '/en', es: '/es', 'x-default': '/en' } },
     openGraph: { type: 'website', siteName: SITE.name, title: `${SITE.name} | ${t.metaTitle}`, description: t.metaDesc, locale: lang === 'es' ? 'es_US' : 'en_US' },
     appleWebApp: { capable: true, title: 'SFM Autos', statusBarStyle: 'black-translucent' },
     formatDetection: { telephone: true },
     robots: { index: true, follow: true },
-    verification: { google: 'X2M2J7JipJQpx0qXhF-U9whdX_y94H1ejDjVVmDqorA' },
+    verification: { google: '6JzKUzA2wNXJgxmNaK7Ob4hUyYlJLtAxLBpuFClqN94' },
   };
 }
 
-export default async function RootLayout({ children, params }) {
+export default async function LangLayout({ children, params }) {
   const { lang } = await params;
   if (!LANGS.includes(lang)) notFound();
   const t = getT(lang);

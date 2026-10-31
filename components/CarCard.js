@@ -1,15 +1,13 @@
 "use client";
 import { useRef, useState } from 'react';
 import Link from 'next/link';
-import { money } from '@/lib/cars';
-import { HeartIcon, XMarkIcon } from '@/components/Icons';
+import { money } from '@/lib/inventory';
+import { milesText } from '@/lib/utils';
+import { HeartIcon } from '@/components/Icons';
 import { useFavorites } from '@/context/FavoritesContext';
 
 const MAX_DOTS = 5;
 const SWIPE_MIN_PX = 40;
-
-
-export const milesText = (c, t) => (c.miles ? `${Number(c.miles).toLocaleString('en-US')} ${t?.mi || t?.miles || 'mi'}` : (t?.milesNA || ''));
 
 export default function CarCard({ car, lang, t, index = 0 }) {
   const count = Number(car.photos) || 0;
@@ -69,7 +67,7 @@ export default function CarCard({ car, lang, t, index = 0 }) {
                 <button
                   key={n}
                   type="button"
-                  aria-label={`Photo ${n + 1}`}
+                  aria-label={`${n + 1}/${count}`}
                   onClick={(e) => { e.preventDefault(); e.stopPropagation(); goTo(n); }}
                   style={{
                     width: n === currentPhoto ? '16px' : '6px',
@@ -101,9 +99,6 @@ export default function CarCard({ car, lang, t, index = 0 }) {
             >
               <HeartIcon fill={fav ? '#E63946' : 'none'} />
             </button>
-            <button className="hide-btn" aria-label={t.hide}>
-              <XMarkIcon />
-            </button>
           </div>
         </div>
         <div className="cbody">
@@ -119,7 +114,7 @@ export default function CarCard({ car, lang, t, index = 0 }) {
             role="button"
             style={{ display: 'block', textAlign: 'center', background: '#FFCD00', color: '#000000', fontWeight: 700 }}
           >
-            {lang === 'es' ? 'Ver detalles →' : 'View Details →'}
+            {t.viewDetails} →
           </span>
         </div>
       </Link>
