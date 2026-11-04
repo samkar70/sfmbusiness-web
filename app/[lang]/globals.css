@@ -15,7 +15,7 @@ button,input,select,textarea{font:inherit;color:inherit}
 .logo{font-weight:900;font-size:22px;letter-spacing:-.5px;line-height:1}
 .logo .sfm{color:#FFFFFF}
 .logo b{color:#E63946}
-.logo small{display:block;font-size:10px;font-weight:600;letter-spacing:2px;color:var(--mut);margin-top:3px;text-transform:uppercase}
+.logo small{display:block;font-size:10px;font-weight:600;letter-spacing:2px;color:#FFCD00;margin-top:3px;text-transform:uppercase}
 .lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:99px;padding:3px}
 .lang a{padding:5px 11px;border-radius:99px;font-size:12px;font-weight:700;color:var(--mut)}
 .lang a.on{background:#FFCD00;color:#000}
