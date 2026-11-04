@@ -159,3 +159,21 @@ details.filters[open]>summary{border-bottom:1px solid var(--line)}
 .cinfo div{display:flex;justify-content:space-between;gap:12px;font-size:14px}
 .cinfo dt{color:var(--mut)}
 .cinfo dd{margin:0;font-weight:700;text-align:right}
+
+/* Reviews card + quick search block */
+.reviews{margin:16px 0 0;padding:0 0 4px;display:grid;gap:12px}
+.rhead{padding:0 16px;display:grid;gap:4px}
+.rhead h2{font-size:18px;font-weight:800;letter-spacing:-.3px;color:#fff}
+.rsum{font-size:13px;color:var(--mut);text-decoration:none}
+.rsum b{color:#fff}
+.stars{color:#FFCD00;letter-spacing:2px;font-size:15px}
+.rlist{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding:2px 16px 6px;scrollbar-width:none}
+.rlist::-webkit-scrollbar{display:none}
+.rcard{flex:0 0 82%;max-width:340px;scroll-snap-align:center;margin:0;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;display:grid;gap:10px;align-content:start}
+.rcard blockquote{margin:0;font-size:14px;line-height:1.5;color:var(--txt)}
+.rcard figcaption{display:flex;justify-content:space-between;align-items:center;font-size:13px}
+.rcard figcaption span{color:var(--mut);font-weight:600}
+.rmore{padding:0 16px;font-size:14px;font-weight:700;color:#fff;text-decoration:underline;text-underline-offset:4px;text-decoration-color:#FFCD00}
+.hero2{border-bottom:0}
+.quickwrap{display:grid;gap:12px;padding:18px 16px 6px}
+.quickwrap .quick{margin-top:0}

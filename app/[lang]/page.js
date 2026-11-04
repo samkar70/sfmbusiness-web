@@ -1,6 +1,7 @@
 import Header from '@/components/Header';
 import CarList, { SavedPill } from '@/components/CarList';
 import Unavailable from '@/components/Unavailable';
+import Reviews from '@/components/Reviews';
 import { getCars } from '@/lib/cars';
 import { filterCars } from '@/lib/inventory';
 import { getT } from '@/lib/i18n';
@@ -56,6 +57,11 @@ export default async function Home({ params, searchParams }) {
           <ul className="hpoints">
             {t.heroPoints.map((pt) => <li key={pt}>{pt}</li>)}
           </ul>
+        </section>
+
+        <Reviews t={t} />
+
+        <section className="quickwrap">
           <form className="quick" method="GET" action={`/${lang}`}>
             <select name="make" defaultValue={sp.make || ''} aria-label={t.make}>
               <option value="">{t.quickMake}</option>
