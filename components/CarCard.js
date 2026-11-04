@@ -14,6 +14,7 @@ export default function CarCard({ car, lang, t, index = 0 }) {
   const { isFavorite, toggleFavorite } = useFavorites();
   const fav = isFavorite(car.id);
   const [currentPhoto, setCurrentPhoto] = useState(0);
+  const [tab, setTab] = useState('price');
   const touchStartX = useRef(null);
   const swiped = useRef(false);
 
@@ -87,6 +88,7 @@ export default function CarCard({ car, lang, t, index = 0 }) {
           <span className={`tag ${car.state === 'available' ? 'ok' : 'soon'}`}>
             {car.state === 'available' ? t.available : t.soon}
           </span>
+          {car.off > 0 && <span className="off">{car.off}% {t.off}</span>}
           {/* Top-right action buttons */}
           <div className="top-actions">
             <button
@@ -103,11 +105,42 @@ export default function CarCard({ car, lang, t, index = 0 }) {
         </div>
         <div className="cbody">
           <h2 className="ctitle">{car.title}</h2>
-          <p className="csub">{milesText(car, t)}{car.transmission ? ` · ${car.transmission}` : ''}{car.color ? ` · ${car.color}` : ''}</p>
           <p className="csub"><span className="icon-location" aria-hidden="true"></span> Alvarado, TX</p>
-          <div className="cfoot">
-            <div className="price">{money(car.price) || t.callForPrice}</div>
+          <div className="ctabs" role="tablist">
+            {['price', 'info'].map((k) => (
+              <button
+                key={k}
+                type="button"
+                role="tab"
+                aria-selected={tab === k}
+                className={tab === k ? 'on' : ''}
+                onClick={(e) => { e.preventDefault(); e.stopPropagation(); setTab(k); }}
+              >
+                {k === 'price' ? t.tabPrice : t.tabInfo}
+              </button>
+            ))}
           </div>
+          {tab === 'price' ? (
+            <div className="cpanel">
+              <div className="price">{money(car.price) || t.callForPrice}</div>
+              {car.retail > 0 && <div className="retail">{t.retail}: {money(car.retail)}</div>}
+              <div className="nofees">{t.noFees}</div>
+            </div>
+          ) : (
+            <dl className="cpanel cinfo">
+              {[
+                [t.year, car.year],
+                [t.mileage, milesText(car, t)],
+                [t.transmission, car.transmission],
+                [t.color, car.color],
+                [t.engine, car.engine],
+                [t.fuel, car.fuel],
+                [t.body, car.body],
+              ].filter(([, v]) => v).map(([k, v]) => (
+                <div key={k + v}><dt>{k}</dt><dd>{v}</dd></div>
+              ))}
+            </dl>
+          )}
           {/* The whole card is already a <Link>; a span avoids nesting <a> inside <a>. */}
           <span
             className="full-width-btn"

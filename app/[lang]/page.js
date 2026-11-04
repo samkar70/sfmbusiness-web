@@ -25,6 +25,8 @@ export default async function Home({ params, searchParams }) {
   const tCard = {
     available: t.available, soon: t.soon, favorite: t.favorite, noPhoto: t.noPhoto, mi: t.mi, milesNA: t.milesNA,
     callForPrice: t.callForPrice, viewDetails: t.viewDetails,
+    tabPrice: t.tabPrice, tabInfo: t.tabInfo, noFees: t.noFees, retail: t.retail, off: t.off,
+    year: t.year, mileage: t.mileage, color: t.color, transmission: t.transmission, engine: t.engine, fuel: t.fuel, body: t.body,
   };
   let all;
   try {
@@ -48,21 +50,27 @@ export default async function Home({ params, searchParams }) {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(list) }} />
       <Header lang={lang} t={t} />
       <main>
-        <section className="hero">
-          <span className="loc-badge">📍 Alvarado, TX</span>
-          <h1>{t.heroTitle}</h1>
-        </section>
-
-        <section className="panel about" aria-labelledby="about-title">
-          <h2 id="about-title">{t.aboutTitle}</h2>
-          <p>{t.aboutText}</p>
-          <ul>
-            {t.aboutPoints.map((pt) => <li key={pt}>{pt}</li>)}
+        <section className="hero2">
+          <span className="kicker">{t.heroKicker}</span>
+          <h1>{t.heroHead1} <em>{t.heroHead2}</em></h1>
+          <ul className="hpoints">
+            {t.heroPoints.map((pt) => <li key={pt}>{pt}</li>)}
           </ul>
-          <p><b>📍 {t.aboutLoc}</b></p>
+          <form className="quick" method="GET" action={`/${lang}`}>
+            <select name="make" defaultValue={sp.make || ''} aria-label={t.make}>
+              <option value="">{t.quickMake}</option>
+              {makes.map((m) => <option key={m}>{m}</option>)}
+            </select>
+            <select name="maxPrice" defaultValue={sp.maxPrice || ''} aria-label={t.maxPrice}>
+              <option value="">{t.quickPrice}</option>
+              {PRICES.map((p) => <option key={p} value={p}>${p.toLocaleString('en-US')}</option>)}
+            </select>
+            <button className="btn primary" type="submit">{t.quickSearch}</button>
+          </form>
+          <a className="browse" href="#inventory">{t.browseAll} →</a>
         </section>
 
-        <form className="search" method="GET" action={`/${lang}`} role="search">
+        <form className="search" id="inventory" method="GET" action={`/${lang}`} role="search">
           <label className="sbox">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7" /><line x1="21" y1="21" x2="16.5" y2="16.5" /></svg>
             <input name="q" defaultValue={sp.q || ''} placeholder={t.search} enterKeyHint="search" aria-label={t.search} />
