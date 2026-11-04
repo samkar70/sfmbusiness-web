@@ -75,6 +75,17 @@ describe('filterCars', () => {
   it('sorts by price ascending, with unpriced cars last', () => {
     expect(filterCars(cars, { sort: 'priceAsc' }).map((c) => c.id)).toEqual([1, 2, 3]);
   });
+
+  it('defaults to price low to high and puts "coming soon" cars last', () => {
+    const mixed = [
+      { id: 1, price: 9000, state: 'soon', title: 'a', make: '', model: '', color: '' },
+      { id: 2, price: 20000, state: 'available', title: 'b', make: '', model: '', color: '' },
+      { id: 3, price: 12000, state: 'available', title: 'c', make: '', model: '', color: '' },
+      { id: 4, price: 5000, state: 'soon', title: 'd', make: '', model: '', color: '' },
+    ];
+    expect(filterCars(mixed).map((c) => c.id)).toEqual([3, 2, 4, 1]);
+    expect(filterCars(mixed, { sort: 'priceDesc' }).map((c) => c.id)).toEqual([2, 3, 1, 4]);
+  });
 });
 
 describe('money', () => {

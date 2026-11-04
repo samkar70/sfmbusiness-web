@@ -100,8 +100,8 @@ export default async function Home({ params, searchParams }) {
               </label>
               <label>{t.sort}
                 <select name="sort" defaultValue={sp.sort || ''}>
-                  <option value="">{t.sortNew}</option>
-                  <option value="priceAsc">{t.sortPriceAsc}</option>
+                  <option value="">{t.sortPriceAsc}</option>
+                  <option value="new">{t.sortNew}</option>
                   <option value="priceDesc">{t.sortPriceDesc}</option>
                   <option value="miles">{t.sortMiles}</option>
                   <option value="year">{t.sortYear}</option>
@@ -128,6 +128,15 @@ export default async function Home({ params, searchParams }) {
           noSavedSub={t.noSavedSub}
           exploreLabel={t.exploreCars}
         />
+
+        <section className="panel about" aria-labelledby="about-title">
+          <h2 id="about-title">{t.aboutTitle}</h2>
+          <p>{t.aboutText}</p>
+          <ul>
+            {t.aboutPoints.map((pt) => <li key={pt}>{pt}</li>)}
+          </ul>
+          <p><b>📍 {t.aboutLoc}</b></p>
+        </section>
 
         <footer className="foot">
           <b>{t.visit}</b>
