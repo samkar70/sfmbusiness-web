@@ -61,7 +61,7 @@ function offlinePage(url) {
     `<style>body{margin:0;min-height:100vh;display:grid;place-items:center;background:#0b0f1a;color:#f3f6fc;` +
     `font-family:system-ui,sans-serif;text-align:center;padding:24px}a{display:inline-block;margin-top:16px;` +
     `background:#FFCD00;color:#000;padding:12px 24px;border-radius:99px;font-weight:700;text-decoration:none}</style>` +
-    `</head><body><main><h1>${t.h1}</h1><p>${t.p}</p><a href="tel:+14697206172">${t.call} (469) 720-6172</a></main></body></html>`;
+    `</head><body><main><h1>${t.h1}</h1><p>${t.p}</p><a href="tel:+14696642977">${t.call} (469) 664-2977</a></main></body></html>`;
   return new Response(html, {
     status: 503,
     headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store' },
