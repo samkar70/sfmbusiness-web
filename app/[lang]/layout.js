@@ -3,7 +3,7 @@ import { Outfit } from 'next/font/google';
 import { notFound } from 'next/navigation';
 import { LANGS, SITE } from '@/lib/site';
 import { getT } from '@/lib/i18n';
-import InstallPrompt from '@/components/InstallPrompt';
+import ServiceWorkerRegister from '@/components/ServiceWorkerRegister';
 import { FavoritesProvider } from '@/context/FavoritesContext';
 
 export const dynamic = 'force-dynamic';
@@ -48,7 +48,7 @@ export default async function LangLayout({ children, params }) {
       <body className={font.className}>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(dealer) }} />
         <FavoritesProvider><div className="app">{children}</div></FavoritesProvider>
-        <InstallPrompt t={{ install: t.install, installSub: t.installSub, installBtn: t.installBtn, installIos: t.installIos, dismiss: t.dismiss, iosStep1: t.iosStep1, iosStep2: t.iosStep2, iosGotIt: t.iosGotIt }} />
+        <ServiceWorkerRegister />
       </body>
     </html>
   );

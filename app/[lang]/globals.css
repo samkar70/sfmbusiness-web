@@ -113,10 +113,6 @@ details.filters[open]>summary{border-bottom:1px solid var(--line)}
 
 .foot{padding:26px 16px;color:var(--mut);font-size:13px;display:grid;gap:6px}
 .foot b{color:var(--txt)}
-.install{position:fixed;z-index:40;left:12px;right:12px;bottom:calc(84px + env(safe-area-inset-bottom));max-width:496px;margin:0 auto;background:var(--card2);border:1px solid var(--brand);border-radius:20px;padding:14px;display:flex;gap:12px;align-items:center;box-shadow:0 12px 40px #000a;animation:rise .4s both}
-.install .ic{width:46px;height:46px;border-radius:12px;background:linear-gradient(135deg,#0b0f1a,#26304a);color:#E63946;border:1px solid #FFCD00;display:grid;place-items:center;font-weight:900;font-size:13px;flex:none}
-.install p{flex:1;font-size:13px;color:var(--mut)}.install p b{display:block;color:var(--txt);font-size:14px}
-.install .btn{height:40px;font-size:13px}
 .x{background:none;border:0;color:var(--mut);font-size:20px;cursor:pointer}
 
 /* Car Card Enhancements */
