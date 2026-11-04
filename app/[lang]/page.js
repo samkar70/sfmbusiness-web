@@ -53,6 +53,15 @@ export default async function Home({ params, searchParams }) {
           <h1>{t.heroTitle}</h1>
         </section>
 
+        <section className="panel about" aria-labelledby="about-title">
+          <h2 id="about-title">{t.aboutTitle}</h2>
+          <p>{t.aboutText}</p>
+          <ul>
+            {t.aboutPoints.map((pt) => <li key={pt}>{pt}</li>)}
+          </ul>
+          <p><b>📍 {t.aboutLoc}</b></p>
+        </section>
+
         <form className="search" method="GET" action={`/${lang}`} role="search">
           <label className="sbox">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7" /><line x1="21" y1="21" x2="16.5" y2="16.5" /></svg>
@@ -128,15 +137,6 @@ export default async function Home({ params, searchParams }) {
           noSavedSub={t.noSavedSub}
           exploreLabel={t.exploreCars}
         />
-
-        <section className="panel about" aria-labelledby="about-title">
-          <h2 id="about-title">{t.aboutTitle}</h2>
-          <p>{t.aboutText}</p>
-          <ul>
-            {t.aboutPoints.map((pt) => <li key={pt}>{pt}</li>)}
-          </ul>
-          <p><b>📍 {t.aboutLoc}</b></p>
-        </section>
 
         <footer className="foot">
           <b>{t.visit}</b>

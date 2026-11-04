@@ -133,7 +133,7 @@ details.filters[open]>summary{border-bottom:1px solid var(--line)}
 .full-width-btn {width:100%;background:#FFCD00;color:#000;border:none;border-radius:12px;padding:12px;font-weight:700;cursor:pointer;transition:background .2s;}
 .full-width-btn:hover {background:#FFDB4D;}
 
-.about{margin:20px 16px 0}
+.about{margin:12px 16px 4px}
 .about h2{font-size:18px;font-weight:800;letter-spacing:-.3px;color:#FFFFFF}
 .about p{font-size:14px;line-height:1.5;color:var(--mut)}
 .about p b{color:var(--txt)}
