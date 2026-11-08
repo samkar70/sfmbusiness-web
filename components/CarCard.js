@@ -97,9 +97,9 @@ export default function CarCard({ car, lang, t, index = 0 }) {
               aria-label={t.favorite}
               aria-pressed={fav}
               onClick={(e) => { e.preventDefault(); e.stopPropagation(); toggleFavorite(car.id); }}
-              style={{ color: fav ? '#E63946' : 'rgba(255,255,255,0.75)' }}
+              style={{ color: fav ? '#B5261F' : 'rgba(255,255,255,0.75)' }}
             >
-              <HeartIcon fill={fav ? '#E63946' : 'none'} />
+              <HeartIcon fill={fav ? '#B5261F' : 'none'} />
             </button>
           </div>
         </div>
@@ -145,7 +145,7 @@ export default function CarCard({ car, lang, t, index = 0 }) {
           <span
             className="full-width-btn"
             role="button"
-            style={{ display: 'block', textAlign: 'center', background: '#FFCD00', color: '#000000', fontWeight: 700 }}
+            style={{ display: 'block', textAlign: 'center' }}
           >
             {t.viewDetails} →
           </span>

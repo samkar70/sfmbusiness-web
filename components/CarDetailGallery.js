@@ -96,7 +96,7 @@ export default function CarDetailGallery({
         <button className="round" onClick={() => router.back()} aria-label={backLabel} style={buttonStyle}>←</button>
         <div style={{ display: 'flex', gap: '8px' }}>
           <button className="round" onClick={share} aria-label={shareLabel} style={shareBtnStyle}>⤴</button>
-          <button className="round" aria-label={favoriteLabel} onClick={() => toggleFavorite(id)} aria-pressed={fav} style={{ ...buttonStyle, color: fav ? '#E63946' : 'rgba(255,255,255,0.75)' }}><HeartIcon filled={fav} /></button>
+          <button className="round" aria-label={favoriteLabel} onClick={() => toggleFavorite(id)} aria-pressed={fav} style={{ ...buttonStyle, color: fav ? '#B5261F' : 'rgba(255,255,255,0.75)' }}><HeartIcon filled={fav} /></button>
         </div>
       </div>
 
@@ -104,14 +104,14 @@ export default function CarDetailGallery({
       <div className="gallery-grid" style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
         {/* Main photo */}
         <div className="gallery-main" onClick={() => openLightbox(0)} style={{ width: '100%', height: '260px', position: 'relative', cursor: 'pointer' }}>
-          <Image src={imgUrl(id, 0)} alt={alt} fill style={{ objectFit: 'cover' }} priority />
+          <Image unoptimized src={imgUrl(id, 0)} alt={alt} fill style={{ objectFit: 'cover' }} priority />
         </div>
         {/* Side photos (only those that exist) */}
         {sidePhotos.length > 0 && (
           <div className="gallery-side" style={{ display: 'grid', gridTemplateColumns: `repeat(${sidePhotos.length}, 1fr)`, gap: '4px', height: '140px' }}>
             {sidePhotos.map((i) => (
               <div key={i} onClick={() => openLightbox(i)} style={{ position: 'relative', cursor: 'pointer' }}>
-                <Image src={imgUrl(id, i)} alt={`${alt} ${i + 1}`} fill style={{ objectFit: 'cover' }} />
+                <Image unoptimized src={imgUrl(id, i)} alt={`${alt} ${i + 1}`} fill style={{ objectFit: 'cover' }} />
               </div>
             ))}
           </div>
@@ -119,7 +119,7 @@ export default function CarDetailGallery({
         {/* Bottom wide photo, only when there is a fourth photo */}
         {hasBottom && (
           <div className="gallery-bottom" onClick={() => openLightbox(3)} style={{ width: '100%', height: '200px', position: 'relative', cursor: 'pointer' }}>
-            <Image src={imgUrl(id, 3)} alt={`${alt} 4`} fill style={{ objectFit: 'cover' }} />
+            <Image unoptimized src={imgUrl(id, 3)} alt={`${alt} 4`} fill style={{ objectFit: 'cover' }} />
             {extraCount > 0 && (
               <div className="overlay-badge" style={overlayBadgeStyle} onClick={() => openLightbox(3)}>
                 {morePhotos.replace('{n}', extraCount)}
@@ -140,7 +140,7 @@ export default function CarDetailGallery({
               onTouchEnd={onTouchEnd}
               style={{ position: 'absolute', inset: 0, touchAction: 'pan-y' }}
             >
-              <Image src={imgUrl(id, activeIdx)} alt={`${alt} ${activeIdx + 1}`} fill style={{ objectFit: 'contain', pointerEvents: 'none' }} />
+              <Image unoptimized src={imgUrl(id, activeIdx)} alt={`${alt} ${activeIdx + 1}`} fill style={{ objectFit: 'contain', pointerEvents: 'none' }} />
             </div>
             <div style={counterStyle}>{activeIdx + 1} / {count}</div>
           </div>
@@ -167,7 +167,7 @@ const buttonStyle = {
 
 const shareBtnStyle = {
   ...buttonStyle,
-  background: '#E63946',
+  background: '#B5261F',
   color: '#FFFFFF',
   boxShadow: '0 2px 8px rgba(0, 0, 0, 0.4)',
   borderRadius: '50%',

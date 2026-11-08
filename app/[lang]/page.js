@@ -52,7 +52,11 @@ export default async function Home({ params, searchParams }) {
       <Header lang={lang} t={t} />
       <main>
         <section className="hero2">
-          <span className="kicker">{t.heroKicker}</span>
+          <div className="hrow">
+            <span className="kicker">{t.heroKicker}</span>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img className="badge-img" src="/brand/sfm-badge.png" alt="SFM Auto Sales · Alvarado, Texas · Family-run, honest deals" width="92" height="92" />
+          </div>
           <h1>{t.heroHead1} <em>{t.heroHead2}</em></h1>
           <ul className="hpoints">
             {t.heroPoints.map((pt) => <li key={pt}>{pt}</li>)}

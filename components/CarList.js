@@ -15,7 +15,7 @@ export function SavedPill({ label, allIds }) {
       aria-pressed={showSaved}
       onClick={() => setShowSaved(!showSaved)}
     >
-      <HeartIcon size={16} fill={showSaved || n > 0 ? '#E63946' : 'none'} color={showSaved || n > 0 ? '#E63946' : 'currentColor'} />
+      <HeartIcon size={16} fill={showSaved || n > 0 ? '#B5261F' : 'none'} color={showSaved || n > 0 ? '#B5261F' : 'currentColor'} />
       {label} ({n})
     </button>
   );

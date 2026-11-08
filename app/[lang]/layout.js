@@ -1,5 +1,5 @@
 import './globals.css';
-import { Outfit } from 'next/font/google';
+import { Archivo } from 'next/font/google';
 import { notFound } from 'next/navigation';
 import { LANGS, SITE } from '@/lib/site';
 import { getT } from '@/lib/i18n';
@@ -8,10 +8,10 @@ import { FavoritesProvider } from '@/context/FavoritesContext';
 
 export const dynamic = 'force-dynamic';
 
-const font = Outfit({ subsets: ['latin'], display: 'swap' });
+const font = Archivo({ subsets: ['latin'], display: 'swap' });
 
 export const viewport = {
-  width: 'device-width', initialScale: 1, themeColor: '#0b0f1a', viewportFit: 'cover',
+  width: 'device-width', initialScale: 1, themeColor: '#0a0a0a', viewportFit: 'cover',
 };
 
 export async function generateMetadata({ params }) {
