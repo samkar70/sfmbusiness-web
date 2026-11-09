@@ -6,6 +6,7 @@ import { getCars } from '@/lib/cars';
 import { filterCars } from '@/lib/inventory';
 import { getT } from '@/lib/i18n';
 import { SITE } from '@/lib/site';
+import { RETAIL_META } from '@/lib/retail';
 
 export const dynamic = 'force-dynamic'; // data is cached 5 min in lib/cars.js; failures are never cached
 
@@ -29,6 +30,8 @@ export default async function Home({ params, searchParams }) {
     tabPrice: t.tabPrice, tabInfo: t.tabInfo, noFees: t.noFees, retail: t.retail, off: t.off,
     year: t.year, mileage: t.mileage, color: t.color, transmission: t.transmission, engine: t.engine, fuel: t.fuel, body: t.body,
   };
+  const asOf = new Date(`${RETAIL_META.asOf}T12:00:00`).toLocaleDateString(lang === 'es' ? 'es-US' : 'en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  tCard.carfaxNote = t.carfaxNote(RETAIL_META, asOf);
   let all;
   try {
     all = await getCars();

@@ -84,11 +84,13 @@ export default function CarCard({ car, lang, t, index = 0 }) {
               ))}
             </div>
           )}
-          {/* Top-left status badge */}
-          <span className={`tag ${car.state === 'available' ? 'ok' : 'soon'}`}>
-            {car.state === 'available' ? t.available : t.soon}
-          </span>
-          {car.off > 0 && <span className="off">{car.off}% {t.off}</span>}
+          {/* Top-left status badge: only shown for cars that are not ready yet */}
+          {car.state !== 'available' && <span className="tag soon">{t.soon}</span>}
+          {car.off > 0 && (
+            <span className="off" aria-label={`${car.off}% ${t.off}`}>
+              <span className="offtag"><b>{car.off}%</b><small>{t.off}</small></span>
+            </span>
+          )}
           {/* Top-right action buttons */}
           <div className="top-actions">
             <button
@@ -123,8 +125,13 @@ export default function CarCard({ car, lang, t, index = 0 }) {
           {tab === 'price' ? (
             <div className="cpanel">
               <div className="price">{money(car.price) || t.callForPrice}</div>
-              {car.retail > 0 && <div className="retail">{t.retail}: {money(car.retail)}</div>}
               <div className="nofees">{t.noFees}</div>
+              {car.retail > 0 && (
+                <div className="cfline">
+                  <span className="retail">{t.retail}: <b>{money(car.retail)}</b></span>
+                  <span className="cfnote">{t.carfaxNote}</span>
+                </div>
+              )}
             </div>
           ) : (
             <dl className="cpanel cinfo">

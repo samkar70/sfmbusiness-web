@@ -8,6 +8,7 @@ import { getCarById, idFromSlug } from '@/lib/cars';
 import { money } from '@/lib/inventory';
 import { getT } from '@/lib/i18n';
 import { SITE } from '@/lib/site';
+import { RETAIL_META } from '@/lib/retail';
 
 export const dynamic = 'force-dynamic';
 
@@ -48,6 +49,7 @@ export default async function CarPage({ params }) {
     return <Unavailable lang={lang} t={t} />;
   }
   if (!car) notFound();
+  const asOf = new Date(`${RETAIL_META.asOf}T12:00:00`).toLocaleDateString(lang === 'es' ? 'es-US' : 'en-US', { month: 'short', day: 'numeric', year: 'numeric' });
   const url = `${SITE.url}/${lang}/cars/${car.slug}`;
   const waText = encodeURIComponent(t.waText(car.title));
 
@@ -100,6 +102,13 @@ export default async function CarPage({ params }) {
           <div className="cfoot" style={{ margin: 0 }}>
             <div className="price">{money(car.price) || t.callForPrice}</div>
           </div>
+          {car.off > 0 && (
+            <div className="cfbanner" role="note">
+              <b>{car.off}% {t.off}</b>
+              <span>{t.retail}: {money(car.retail)}</span>
+              <small>{t.carfaxNote(RETAIL_META, asOf)}</small>
+            </div>
+          )}
 
           <div className="stats">
             <div className="stat"><b>{car.year}</b><span>{t.year}</span></div>
