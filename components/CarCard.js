@@ -129,7 +129,6 @@ export default function CarCard({ car, lang, t, index = 0 }) {
               {car.retail > 0 && (
                 <div className="cfline">
                   <span className="retail">{t.retail}: <b>{money(car.retail)}</b></span>
-                  <span className="cfnote">{t.carfaxNote}</span>
                 </div>
               )}
             </div>

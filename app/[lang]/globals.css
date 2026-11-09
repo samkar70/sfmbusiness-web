@@ -158,7 +158,6 @@ details.filters[open]>summary{border-bottom:1px solid var(--line)}
 .cfline{display:grid;gap:2px;margin-top:2px}
 .retail{font-size:14px;color:var(--mut)}
 .retail b{color:var(--txt)}
-.cfnote{font-size:11px;line-height:1.35;color:var(--mut)}
 .nofees{font-size:12px;font-weight:800;letter-spacing:.3px;color:var(--brand-txt)}
 .cinfo{margin:0;gap:7px}
 .cinfo div{display:flex;justify-content:space-between;gap:12px;font-size:14px}
@@ -209,4 +208,3 @@ details.filters[open]>summary{border-bottom:1px solid var(--line)}
 .cfbanner{display:grid;gap:3px;background:#B5261F;color:#fff;border-radius:14px;padding:12px 14px}
 .cfbanner b{font-size:18px;font-weight:900;letter-spacing:-.2px;text-transform:uppercase}
 .cfbanner span{font-size:14px;font-weight:700}
-.cfbanner small{font-size:11px;opacity:.9;line-height:1.35}
