@@ -88,7 +88,8 @@ export default async function CarPage({ params }) {
       <main>
         <CarDetailGallery id={car.id} count={car.photos} alt={car.title} noPhoto={t.noPhoto}
                  backLabel={t.back} shareLabel={t.share} shareTitle={car.title}
-                 favoriteLabel={t.favorite} closeLabel={t.close} morePhotos={t.morePhotos} />
+                 favoriteLabel={t.favorite} closeLabel={t.close} morePhotos={t.morePhotos}
+                 zoomInLabel={t.zoomIn} zoomOutLabel={t.zoomOut} />
         <div className="sheet">
           <div>
             <h1 className="h2">{car.title}</h1>

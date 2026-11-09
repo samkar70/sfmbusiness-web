@@ -1,7 +1,8 @@
 'use client';
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import ZoomableImage from '@/components/ZoomableImage';
 import { useFavorites } from '@/context/FavoritesContext';
 
 // Inline Heart icon SVG to avoid external imports
@@ -36,6 +37,8 @@ export default function CarDetailGallery({
   favoriteLabel,
   closeLabel,
   morePhotos, // template with {n}, e.g. "+{n} more photos"
+  zoomInLabel,
+  zoomOutLabel,
 }) {
   const router = useRouter();
   const [lightboxOpen, setLightboxOpen] = useState(false);
@@ -50,16 +53,6 @@ export default function CarDetailGallery({
   const closeLightbox = () => setLightboxOpen(false);
   const prev = () => setActiveIdx((i) => (i - 1 + count) % count);
   const next = () => setActiveIdx((i) => (i + 1) % count);
-
-  const touchStartX = useRef(null);
-  const onTouchStart = (e) => { touchStartX.current = e.touches[0].clientX; };
-  const onTouchEnd = (e) => {
-    if (touchStartX.current === null) return;
-    const dx = e.changedTouches[0].clientX - touchStartX.current;
-    touchStartX.current = null;
-    if (Math.abs(dx) < 50) return;
-    if (dx < 0) next(); else prev();
-  };
 
   const share = async () => {
     const data = { title: shareTitle, url: location.href };
@@ -134,13 +127,15 @@ export default function CarDetailGallery({
         <div className="lightbox" onClick={closeLightbox} style={lightboxStyle}>
           <div className="lightbox-content" onClick={(e) => e.stopPropagation()} style={lightboxContentStyle}>
             <button type="button" className="lightbox-close" aria-label={closeLabel} onClick={(e) => { e.stopPropagation(); closeLightbox(); }} style={closeBtnStyle}>✕</button>
-            <div
-              className="lightbox-image"
-              onTouchStart={onTouchStart}
-              onTouchEnd={onTouchEnd}
-              style={{ position: 'absolute', inset: 0, touchAction: 'pan-y' }}
-            >
-              <Image unoptimized src={imgUrl(id, activeIdx)} alt={`${alt} ${activeIdx + 1}`} fill style={{ objectFit: 'contain', pointerEvents: 'none' }} />
+            <div className="lightbox-image" style={{ position: 'absolute', inset: 0 }}>
+              <ZoomableImage
+                key={activeIdx}
+                src={imgUrl(id, activeIdx)}
+                alt={`${alt} ${activeIdx + 1}`}
+                onSwipe={(d) => (d > 0 ? next() : prev())}
+                zoomInLabel={zoomInLabel}
+                zoomOutLabel={zoomOutLabel}
+              />
             </div>
             <div style={counterStyle}>{activeIdx + 1} / {count}</div>
           </div>
