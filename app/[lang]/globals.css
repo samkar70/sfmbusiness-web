@@ -140,10 +140,6 @@ details.filters[open]>summary{border-bottom:1px solid var(--line)}
 .hpoints{list-style:none;margin:0;padding:0;display:grid;gap:8px}
 .hpoints li{position:relative;padding-left:26px;font-size:15px;font-weight:600;color:var(--txt)}
 .hpoints li::before{content:"✓";position:absolute;left:0;color:var(--brand-txt);font-weight:900}
-.quick{display:grid;gap:10px;background:var(--card);border:1px solid var(--line);box-shadow:0 6px 20px rgba(22,17,14,.08);border-radius:18px;padding:14px;margin-top:4px}
-.quick select{width:100%;height:48px;border-radius:12px;border:1px solid var(--line);background:#fff;color:var(--txt);padding:0 12px;font-size:16px}
-.quick .btn{height:50px;width:100%;flex:none}
-.browse{font-size:14px;font-weight:700;color:var(--txt);text-decoration:underline;text-underline-offset:4px;text-decoration-color:var(--brand)}
 
 /* Card: price / info tabs and retail discount */
 .off{position:absolute;left:0;bottom:14px;z-index:6;filter:drop-shadow(0 3px 5px rgba(0,0,0,.45))}
@@ -179,8 +175,6 @@ details.filters[open]>summary{border-bottom:1px solid var(--line)}
 .rcard figcaption span{color:var(--mut);font-weight:600}
 .rmore{padding:0 16px;font-size:14px;font-weight:700;color:var(--txt);text-decoration:underline;text-underline-offset:4px;text-decoration-color:var(--brand)}
 .hero2{border-bottom:0}
-.quickwrap{display:grid;gap:12px;padding:18px 16px 6px}
-.quickwrap .quick{margin-top:0}
 
 /* Brand badge (B1) in hero */
 .hrow{display:flex;align-items:center;justify-content:space-between;gap:12px}

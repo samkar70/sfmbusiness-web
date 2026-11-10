@@ -65,21 +65,6 @@ export default async function Home({ params, searchParams }) {
 
         <Reviews t={t} />
 
-        <section className="quickwrap">
-          <form className="quick" method="GET" action={`/${lang}`}>
-            <select name="make" defaultValue={sp.make || ''} aria-label={t.make}>
-              <option value="">{t.quickMake}</option>
-              {makes.map((m) => <option key={m}>{m}</option>)}
-            </select>
-            <select name="maxPrice" defaultValue={sp.maxPrice || ''} aria-label={t.maxPrice}>
-              <option value="">{t.quickPrice}</option>
-              {PRICES.map((p) => <option key={p} value={p}>${p.toLocaleString('en-US')}</option>)}
-            </select>
-            <button className="btn primary" type="submit">{t.quickSearch}</button>
-          </form>
-          <a className="browse" href="#inventory">{t.browseAll} →</a>
-        </section>
-
         <form className="search" id="inventory" method="GET" action={`/${lang}`} role="search">
           <label className="sbox">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7" /><line x1="21" y1="21" x2="16.5" y2="16.5" /></svg>
