@@ -147,8 +147,8 @@ export default function CarDetailGallery({
 
 // Styles
 const buttonStyle = {
-  width: '36px',
-  height: '36px',
+  width: '44px',
+  height: '44px',
   borderRadius: '50%',
   background: 'rgba(0,0,0,0.6)',
   color: '#fff',

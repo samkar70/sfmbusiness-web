@@ -63,24 +63,28 @@ export default function CarCard({ car, lang, t, index = 0 }) {
             />
           )}
           {count > 1 && (
-            <div style={{ position: 'absolute', bottom: '10px', left: 0, right: 0, display: 'flex', justifyContent: 'center', gap: '6px', zIndex: 5 }}>
+            <div style={{ position: 'absolute', bottom: '2px', left: 0, right: 0, display: 'flex', justifyContent: 'center', gap: '0px', zIndex: 5 }}>
               {dots.map((n) => (
                 <button
                   key={n}
                   type="button"
                   aria-label={`${n + 1}/${count}`}
+                  aria-current={n === currentPhoto}
                   onClick={(e) => { e.preventDefault(); e.stopPropagation(); goTo(n); }}
-                  style={{
-                    width: n === currentPhoto ? '16px' : '6px',
-                    height: '6px',
-                    padding: 0,
-                    border: 'none',
-                    borderRadius: '3px',
-                    cursor: 'pointer',
-                    background: n === currentPhoto ? '#FFFFFF' : 'rgba(255, 255, 255, 0.4)',
-                    transition: 'width .2s, background .2s',
-                  }}
-                />
+                  style={{ width: '24px', height: '28px', padding: 0, border: 'none', background: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                >
+                  <span
+                    aria-hidden="true"
+                    style={{
+                      display: 'block',
+                      width: n === currentPhoto ? '16px' : '6px',
+                      height: '6px',
+                      borderRadius: '3px',
+                      background: n === currentPhoto ? '#FFFFFF' : 'rgba(255, 255, 255, 0.55)',
+                      transition: 'width .2s, background .2s',
+                    }}
+                  />
+                </button>
               ))}
             </div>
           )}
@@ -136,6 +140,7 @@ export default function CarCard({ car, lang, t, index = 0 }) {
             <dl className="cpanel cinfo">
               {[
                 [t.year, car.year],
+                [t.titleLabel, car.rebuilt ? t.titleRebuilt : null],
                 [t.mileage, milesText(car, t)],
                 [t.transmission, car.transmission],
                 [t.color, car.color],

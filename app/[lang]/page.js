@@ -2,6 +2,7 @@ import Header from '@/components/Header';
 import CarList, { SavedPill } from '@/components/CarList';
 import Unavailable from '@/components/Unavailable';
 import Reviews from '@/components/Reviews';
+import LegalLinks from '@/components/LegalLinks';
 import { getCars } from '@/lib/cars';
 import { filterCars } from '@/lib/inventory';
 import { getT } from '@/lib/i18n';
@@ -26,6 +27,7 @@ export default async function Home({ params, searchParams }) {
   const tCard = {
     available: t.available, soon: t.soon, favorite: t.favorite, noPhoto: t.noPhoto, mi: t.mi, milesNA: t.milesNA,
     callForPrice: t.callForPrice, viewDetails: t.viewDetails,
+    titleLabel: t.titleLabel, titleRebuilt: t.titleRebuilt,
     tabPrice: t.tabPrice, tabInfo: t.tabInfo, noFees: t.noFees, retail: t.retail, off: t.off,
     year: t.year, mileage: t.mileage, color: t.color, transmission: t.transmission, engine: t.engine, fuel: t.fuel, body: t.body,
   };
@@ -50,7 +52,7 @@ export default async function Home({ params, searchParams }) {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(list) }} />
       <Header lang={lang} t={t} />
-      <main>
+      <main id="main">
         <section className="hero2">
           <div className="hrow">
             <span className="kicker">{t.heroKicker}</span>
@@ -146,6 +148,7 @@ export default async function Home({ params, searchParams }) {
           <span>{SITE.street}, {SITE.city}, {SITE.region} {SITE.zip}</span>
           <span>{t.hours}</span>
           <a href={`https://www.google.com/maps/dir/?api=1&destination=${SITE.lat},${SITE.lng}`} target="_blank" rel="noopener">📍 {t.directions}</a>
+          <LegalLinks lang={lang} t={t} />
           <span>© {new Date().getFullYear()} {SITE.name} · {SITE_HOST}</span>
         </footer>
       </main>

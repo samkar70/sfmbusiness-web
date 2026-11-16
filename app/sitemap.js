@@ -18,6 +18,16 @@ export default async function sitemap() {
     alternates: alternates(''),
   }));
 
+  const legal = ['privacy', 'terms'].flatMap((page) =>
+    LANGS.map((lang) => ({
+      url: `${SITE.url}/${lang}/${page}`,
+      lastModified: new Date(),
+      changeFrequency: 'yearly',
+      priority: 0.2,
+      alternates: alternates(`/${page}`),
+    })),
+  );
+
   const vehicles = cars.flatMap((car) =>
     LANGS.map((lang) => ({
       url: `${SITE.url}/${lang}/cars/${car.slug}`,
@@ -28,5 +38,5 @@ export default async function sitemap() {
     })),
   );
 
-  return [...home, ...vehicles];
+  return [...home, ...vehicles, ...legal];
 }

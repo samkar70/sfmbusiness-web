@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 import Header from '@/components/Header';
 import CarDetailGallery from '@/components/CarDetailGallery';
 import ContactForm from '@/components/ContactForm';
+import LegalLinks from '@/components/LegalLinks';
 import Unavailable from '@/components/Unavailable';
 import { milesText } from '@/lib/utils';
 import { getCarById, idFromSlug } from '@/lib/cars';
@@ -23,17 +24,18 @@ export async function generateMetadata({ params }) {
   const t = getT(lang);
   const price = money(car.price);
   const desc = lang === 'es'
-    ? `${car.title} usado en venta en Alvarado, TX${price ? ` por ${price}` : ''}. ${milesText(car, t)}. Llame o escriba por WhatsApp al ${SITE.phoneDisplay}.`
-    : `Used ${car.title} for sale in Alvarado, TX${price ? ` for ${price}` : ''}. ${milesText(car, t)}. Call or WhatsApp ${SITE.phoneDisplay}.`;
+    ? `${car.title} ${car.rebuilt ? 'con título reconstruido' : 'usado'} en venta en Alvarado, TX${price ? ` por ${price}` : ''}. ${milesText(car, t)}. Llame o escriba por WhatsApp al ${SITE.phoneDisplay}.`
+    : `${car.rebuilt ? 'Rebuilt-title' : 'Used'} ${car.title} for sale in Alvarado, TX${price ? ` for ${price}` : ''}. ${milesText(car, t)}. Call or WhatsApp ${SITE.phoneDisplay}.`;
+  const heading = `${car.title}${car.rebuilt ? ` (${t.rebuiltTitle})` : ''}${price ? ` – ${price}` : ''}`;
   const img = car.photos ? [{ url: `/api/img/${car.id}/0`, alt: car.title }] : undefined;
   return {
-    title: `${car.title}${price ? ` – ${price}` : ''}`,
+    title: heading,
     description: desc,
     alternates: {
       canonical: `/${lang}/cars/${car.slug}`,
       languages: { en: `/en/cars/${car.slug}`, es: `/es/cars/${car.slug}`, 'x-default': `/en/cars/${car.slug}` },
     },
-    openGraph: { title: `${car.title}${price ? ` – ${price}` : ''}`, description: desc, type: 'website', images: img },
+    openGraph: { title: heading, description: desc, type: 'website', images: img },
     twitter: { card: 'summary_large_image', images: img?.map((i) => i.url) },
   };
 }
@@ -60,6 +62,7 @@ export default async function CarPage({ params }) {
     vehicleTransmission: car.transmission || undefined, fuelType: car.fuel || undefined,
     mileageFromOdometer: car.miles ? { '@type': 'QuantitativeValue', value: car.miles, unitCode: 'SMI' } : undefined,
     itemCondition: 'https://schema.org/UsedCondition',
+    additionalProperty: car.rebuilt ? { '@type': 'PropertyValue', name: 'Title status', value: 'Rebuilt' } : undefined,
     image: car.photos ? Array.from({ length: Math.min(car.photos, 5) }, (_, i) => `${SITE.url}/api/img/${car.id}/${i}`) : undefined,
     url,
     offers: car.price ? {
@@ -77,7 +80,7 @@ export default async function CarPage({ params }) {
   };
 
   const specs = [
-    [t.year, car.year], [t.color, car.color], [t.transmission, car.transmission],
+    [t.year, car.year], [t.titleLabel, car.rebuilt ? t.titleRebuilt : null], [t.color, car.color], [t.transmission, car.transmission],
     [t.engine, car.engine], [t.fuel, car.fuel], [t.body, car.body], [t.vin, car.vin],
   ].filter(([, v]) => v);
 
@@ -85,7 +88,7 @@ export default async function CarPage({ params }) {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify([ld, crumbs]) }} />
       <Header lang={lang} t={t} path={`/cars/${car.slug}`} />
-      <main>
+      <main id="main">
         <CarDetailGallery id={car.id} count={car.photos} alt={car.title} noPhoto={t.noPhoto}
                  backLabel={t.back} shareLabel={t.share} shareTitle={car.title}
                  favoriteLabel={t.favorite} closeLabel={t.close} morePhotos={t.morePhotos}
@@ -94,7 +97,7 @@ export default async function CarPage({ params }) {
           <div>
             <h1 className="h2">{car.title}</h1>
             <p className="csub" style={{ marginTop: 4 }}>
-              {milesText(car, t)} · 📍 Alvarado, TX · {car.state === 'available' ? t.available : t.soon}
+              {milesText(car, t)} · 📍 Alvarado, TX{car.state !== 'available' ? ` · ${t.soon}` : ''}
             </p>
           </div>
           <div className="cfoot" style={{ margin: 0 }}>
@@ -130,6 +133,7 @@ export default async function CarPage({ params }) {
             <p className="csub">{SITE.street}, {SITE.city}, {SITE.region} {SITE.zip}<br />{t.hours}</p>
             <a className="btn ghost" href={`https://www.google.com/maps/dir/?api=1&destination=${SITE.lat},${SITE.lng}`} target="_blank" rel="noopener">📍 {t.directions}</a>
           </section>
+          <LegalLinks lang={lang} t={t} />
         </div>
       </main>
       <nav className="cta" aria-label="Contact seller">

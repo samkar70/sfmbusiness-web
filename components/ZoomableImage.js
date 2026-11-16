@@ -184,8 +184,8 @@ const zoomBtns = {
 };
 
 const zoomBtn = {
-  width: 36,
-  height: 36,
+  width: 44,
+  height: 44,
   borderRadius: '50%',
   border: 'none',
   background: 'rgba(0,0,0,0.55)',

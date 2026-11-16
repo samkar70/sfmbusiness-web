@@ -47,6 +47,7 @@ export default async function LangLayout({ children, params }) {
     <html lang={lang}>
       <body className={font.className}>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(dealer) }} />
+        <a className="skip" href="#main">{t.skipToMain}</a>
         <FavoritesProvider><div className="app">{children}</div></FavoritesProvider>
         <ServiceWorkerRegister />
       </body>
