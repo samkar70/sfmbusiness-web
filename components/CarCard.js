@@ -86,9 +86,9 @@ export default function CarCard({ car, lang, t, index = 0 }) {
           )}
           {/* Top-left status badge: only shown for cars that are not ready yet */}
           {car.state !== 'available' && <span className="tag soon">{t.soon}</span>}
-          {car.off > 0 && (
-            <span className="off" aria-label={`${car.off}% ${t.off}`}>
-              <span className="offtag"><b>{car.off}%</b><small>{t.off}</small></span>
+          {car.offText && (
+            <span className="off" aria-label={`${car.offText} ${t.off}`}>
+              <span className="offtag"><b>{car.offText}</b><small>{t.off}</small></span>
             </span>
           )}
           {/* Top-right action buttons */}

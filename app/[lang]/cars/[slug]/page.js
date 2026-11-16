@@ -100,9 +100,9 @@ export default async function CarPage({ params }) {
           <div className="cfoot" style={{ margin: 0 }}>
             <div className="price">{money(car.price) || t.callForPrice}</div>
           </div>
-          {car.off > 0 && (
+          {car.offText && (
             <div className="cfbanner" role="note">
-              <b>{car.off}% {t.off}</b>
+              <b>{car.offText} {t.off}</b>
               <span>{t.retail}: {money(car.retail)}</span>
             </div>
           )}
